@@ -1,0 +1,26 @@
+OPE_AND		= &&
+OPE_OR		= ||
+OPE_PIPE	= |
+OPE_LEFT	= [< | <<]
+OPE_RIGHT	= [> | >>]
+OPE_SEMI	= ;
+OPE_REDIR	= [OPE_LEFT | OPE_RIGHT]
+OPE_ALL		= [OPE_AND | OPE_OR | OPE_PIPE | OPE_REDIR]
+WORD		= !OPE_ALL
+
+exp 			::= or_exp [OPE_SEMI exp]?
+or_exp			::= and_exp [OPE_OR or_exp]?
+and_exp			::= pipe_exp [OPE_AND and_exp]?
+pipe_exp		::= redir_exp [OPE_PIPE pipe_exp]?
+redir_exp		::= redir_standard_left | redir_special_left
+redir_standard_left	::= redir_right [OPE_LEFT redir_exp]?
+redir_special_left	::= OPE_LEFT file redir_exp
+redir_right		::= redir_standard_right | redir_special_right
+redir_standard_right	::= command [OPE_RIGHT file]?
+redir_special_right	::= OPE_RIGHT file command
+
+command			::= cmd [args]*
+
+cmd			::= WORD
+args			::= WORD
+file			::= WORD

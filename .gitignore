@@ -1,0 +1,14 @@
+*.o
+*~
+vgcore*
+cmake-build-debug
+a.out
+.idea
+*.txt
+42sh
+*.gch
+*.gcda
+*.gcno
+*.gcov
+*.test
+NormEZ.rb
